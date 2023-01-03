@@ -1,0 +1,86 @@
+<html>
+	
+		<center>
+			<!-- setting header1 for the page -->
+			<h1 style="color:Green;"><b>PROJECT ANIMATION</h1>
+			<h2 style=" Color:Green">Click on the image to stop and start the looping</h2>	
+		</center>
+		<body>
+			<center>
+				<!--setting default image for webpage -->
+				<img src="image1.jpg" alt="The rotation is about to start ......" width="70%" height="70%" id="loop">
+					
+				<!--Setting style of the slider like width, height, and color-->
+				<div>
+					<style>
+				    #slider {
+				   			      width: 70%;
+				   			      height: 25px;
+				   			      background: white;
+				   			      }
+					</style>
+					<!--Setting the range of the slider from min 1 second to max 60 seconds for image looping-->	
+					<br/>
+					<label for=" slider"><text style="Color: Green"> Slider time range is from 1 second to 60       
+						seconds:<br/>Please be patience for the images to change if you change the slider value</text></label>
+					<br/>		  
+					<input type="range" min="1" max="60" value="1" id="slider" list="tickmarks">  <!--The range goes from 1 second to 60 seconds as minimum is 1 and max is 60 -->
+					
+					<datalist id="tickmarks"> <!--Adding the tickmark at four time interval -->
+					  <option value="1"></option>
+					  <option value="15"></option>
+					  <option value="30"></option>
+					  <option value="45"></option>
+					  <option value="60"></option>
+					</datalist>
+					
+					
+				</div>
+				
+			</center>
+	        
+			<script type=" text/javascript">
+				
+				//creating the main function
+				(window.onload=function(){
+					
+					var loop= document.getElementById("loop"); //creating variable image to match image ID
+					var images=['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg'];  //creating an array for all images
+					var count=0;  //initializing the var count.
+					var delayInSeconds=1;   //setting number of seconds delay
+					
+					var changeImage=function(){  // creating a variable as a function.
+						var len=images.length;
+						loop.src = images[count++];
+						if (count == len){
+							count=0;
+						}
+					
+					};
+					
+					
+					var myInterval=setInterval(changeImage, delayInSeconds * 1000);   // creating a variable myInterval to set the time for looping
+					var slider = document.getElementById('slider');
+					
+					slider.oninput = function() {    // change animation speed when the slider value is updated
+						clearInterval(myInterval);   // First clear the previous interval
+						myInterval = setInterval(changeImage, this.value * 1000);  // Now set the new interval
+					};
+					
+					// Creating a  variable as a function to stop and start the looping using click.
+					var toggleAnimation=function(){
+						if(myInterval==null){
+							myInterval=setInterval(changeImage,slider.value*1000);  //Restart animation with the slider value
+							}else{
+								clearInterval(myInterval);   //stop animation and set myInterval to null.
+								myInterval=null;
+							}
+					};
+					
+					loop.addEventListener('click', toggleAnimation);     //Add click event to listener to image
+					
+				});		
+									
+			</script>						
+		</body>		
+</html>
